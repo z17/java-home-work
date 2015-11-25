@@ -4,11 +4,11 @@ package javase01.t02;
 public class Task {
     private double eps;
 
-    Task() {
+    public Task() {
     }
 
-    public void setEps(double _eps) {
-        eps = _eps;
+    public void setEps(double eps) {
+        this.eps = eps;
     }
 
     public void run() {
@@ -26,7 +26,7 @@ public class Task {
         }
     }
 
-    private double countA(final int i) {
+    private double countA(int i) {
         return 1 / Math.pow((i + 1), 2);
     }
 
