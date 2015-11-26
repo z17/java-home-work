@@ -26,6 +26,7 @@ public class Main {
         notebook.deleteNote(test4);
         notebook.print();
         notebook.editNote(-20, edit);
+        notebook.editNote(2, edit);
         notebook.print();
     }
 }
