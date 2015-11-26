@@ -7,8 +7,8 @@ public class Main {
         int n = 14;
 
         Task task = new Task(n);
-        int[][] mass = task.run();
-        task.print(mass);
+        task.run();
+        task.print();
 
 
 
