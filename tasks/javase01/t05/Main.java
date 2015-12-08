@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
 
         // входные данные
-        int n = 14;
+        int n = -14;
 
         Task task = new Task(n);
         task.run();
