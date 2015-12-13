@@ -12,9 +12,17 @@ abstract public class Stationery {
 
     @Override
     public String toString() {
-        return "Stationery{" +
+        return "\nStationery{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
-                '}';
+                "}";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
