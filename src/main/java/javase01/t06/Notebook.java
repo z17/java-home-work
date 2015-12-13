@@ -21,6 +21,23 @@ public class Notebook {
 
     }
 
+
+    /**
+     * @param number номер
+     * @return Note
+     */
+    public Note getNote(int number) {
+        return notes.get(number);
+    }
+
+    /**
+     *
+     * @return кол-во записей
+     */
+    public int getCountNote() {
+        return notes.size();
+    }
+
     /**
      * <p>Добавляет запись в строку</p>
      *
@@ -87,4 +104,6 @@ public class Notebook {
             return false;
         }
     }
+
+
 }
