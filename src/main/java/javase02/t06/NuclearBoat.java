@@ -1,6 +1,11 @@
 package javase02.t06;
 
+import javase02.t07.Classification;
 
+@Classification(
+        type = "Multi-purpose boat",
+        date = "14.12.2015"
+)
 public class NuclearBoat {
     String name;
     StateBoat status;
