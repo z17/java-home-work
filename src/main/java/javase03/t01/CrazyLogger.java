@@ -27,8 +27,8 @@ public class CrazyLogger {
             pattern = "(" + day + "-" + month + "-" + year + " : \\d\\d:\\d\\d - (.*)\\n)";
         }
 
-        Pattern MY_PATTERN = Pattern.compile(pattern);
-        Matcher m = MY_PATTERN.matcher(buffer);
+        Pattern patternFind = Pattern.compile(pattern);
+        Matcher m = patternFind.matcher(buffer);
         while (m.find()) {
             finder.append(m.group(1));
         }
