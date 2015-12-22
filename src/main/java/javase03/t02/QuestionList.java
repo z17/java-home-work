@@ -25,7 +25,7 @@ public class QuestionList {
     }
 
     private void loadQuestions() {
-        questions = ResourceBundle.getBundle("javase02.t02.questions", locale);
+        questions = ResourceBundle.getBundle("javase03.t02.questions", locale);
     }
 
 
