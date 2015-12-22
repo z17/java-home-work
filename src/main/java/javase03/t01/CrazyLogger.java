@@ -43,7 +43,6 @@ public class CrazyLogger {
         return findMessages(0, 0, year);
     }
 
-
     public static StringBuffer getBuffer() {
         return buffer;
     }
