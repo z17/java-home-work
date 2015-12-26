@@ -3,6 +3,7 @@ package javase03.t03;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class ParseHTMLFileTest {
     ParseHTMLFile file = new ParseHTMLFile();
@@ -13,8 +14,17 @@ public class ParseHTMLFileTest {
     }
 
     @Test
-    public void testDetect() throws Exception {
+    public void testDetectSequence() throws Exception {
         file.loadFile("F:\\java\\java-home-work\\src\\main\\resources\\javase03\\t03\\input.html");
-        file.detect();
+        assertFalse(file.detectSequence());
+    }
+
+    @Test
+    public void testGetAllLinkSentence() throws Exception {
+        file.loadFile("F:\\java\\java-home-work\\src\\main\\resources\\javase03\\t03\\input.html");
+        file.detectSequence();
+        System.out.println();
+        file.getAllLinkSentence();
+
     }
 }
