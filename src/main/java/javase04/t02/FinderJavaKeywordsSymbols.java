@@ -13,8 +13,8 @@ public class FinderJavaKeywordsSymbols extends FinderJavaKeywords {
         super(file);
     }
 
-    private void FileRead(String fileName) {
-        try (Reader file = new FileReader(fileName)) {
+    private void FileRead() {
+        try (Reader file = new FileReader(this.file)) {
             int val = file.read();
             while (val != -1) {
                 text.append((char)val);

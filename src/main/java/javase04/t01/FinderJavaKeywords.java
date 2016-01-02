@@ -15,8 +15,8 @@ public class FinderJavaKeywords {
         this.file = file;
     }
 
-    private void FileRead(String fileName) {
-        try (InputStream file = new FileInputStream(fileName)) {
+    private void FileRead() {
+        try (InputStream file = new FileInputStream(this.file)) {
             int val = file.read();
             while (val != -1) {
                 text.append((char)val);
@@ -29,7 +29,7 @@ public class FinderJavaKeywords {
     }
 
     public Map<String, Integer> findKeywords() {
-        FileRead(file);
+        FileRead();
 
         HashMap<String, Integer> result = new HashMap<>();
 
