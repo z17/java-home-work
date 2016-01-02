@@ -3,8 +3,8 @@ package javase04.t01;
 
 import java.util.ArrayList;
 
-abstract class JavaKeywords {
-    static ArrayList<String> KEYWORDS = new ArrayList<>();
+public abstract class JavaKeywords {
+    public static ArrayList<String> KEYWORDS = new ArrayList<>();
     static {
         KEYWORDS.add("abstract");
         KEYWORDS.add("continue");

@@ -8,10 +8,10 @@ import java.util.Map;
 
 
 public class FinderJavaKeywords {
-    private StringBuilder text = new StringBuilder();
-    private String file;
+    protected StringBuilder text = new StringBuilder();
+    protected String file;
 
-    FinderJavaKeywords(String file) {
+    public FinderJavaKeywords(String file) {
         this.file = file;
     }
 
