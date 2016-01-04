@@ -3,7 +3,7 @@ package javase05.t01;
 import java.io.*;
 
 public class FilesViewer {
-    public static final String FOLDER_NOT_FOUND = "Folder Not Found";
+    private static final String FOLDER_NOT_FOUND = "Folder Not Found";
     private static final String FILE_NOT_FOUND = "File Not Found";
     File currentFolder;
 
