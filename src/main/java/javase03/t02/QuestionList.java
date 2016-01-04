@@ -45,34 +45,38 @@ public class QuestionList {
         do {
             System.out.println("Enter command: set locale, get question or exit");
             command = in.nextLine();
-            System.out.println(command);
 
-            if (command.equals("set locale")) {
-                System.out.println("Enter locale, ru or en");
-                String locale = in.nextLine();
-                detectLocale(locale);
-                loadQuestions();
-                System.out.println("ok!");
-            } else if (command.equals("get question")) {
-                if (!localeSet) {
-                    detectLocale("");
+            switch (command) {
+                case "set locale":
+                    System.out.println("Enter locale, ru or en");
+                    String locale = in.nextLine();
+                    detectLocale(locale);
                     loadQuestions();
-                }
-                System.out.println("Enter the number of the question");
-                String buffer = in.nextLine();
-                try {
-                    int number = Integer.parseInt(buffer.trim());
-                    System.out.println(getQuestion(number));
-                    System.out.println(getAnswer(number));
-                } catch (java.util.MissingResourceException t ) {
-                    System.out.println("Question not found");
-                } catch (java.lang.NumberFormatException t) {
-                    System.out.println("Invalid number");
-                }
-            } else if (command.equals("exit")) {
-                System.out.println("Exiting");
-            } else {
-                System.out.println("command error, try more");
+                    System.out.println("ok!");
+                    break;
+                case "get question":
+                    if (!localeSet) {
+                        detectLocale("");
+                        loadQuestions();
+                    }
+                    System.out.println("Enter the number of the question");
+                    String buffer = in.nextLine();
+                    try {
+                        int number = Integer.parseInt(buffer.trim());
+                        System.out.println(getQuestion(number));
+                        System.out.println(getAnswer(number));
+                    } catch (java.util.MissingResourceException t) {
+                        System.out.println("Question not found");
+                    } catch (NumberFormatException t) {
+                        System.out.println("Invalid number");
+                    }
+                    break;
+                case "exit":
+                    System.out.println("Exiting");
+                    break;
+                default:
+                    System.out.println("command error, try more");
+                    break;
             }
         } while (!command.equals("exit"));
     }

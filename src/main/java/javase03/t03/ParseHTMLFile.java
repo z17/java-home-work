@@ -15,8 +15,8 @@ public class ParseHTMLFile {
 
     public void loadFile(String file) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            try {
+
+            try (BufferedReader br = new BufferedReader(new FileReader(file));) {
                 String line = br.readLine();
 
                 while (line != null) {
@@ -24,8 +24,6 @@ public class ParseHTMLFile {
                     html.append(System.lineSeparator());
                     line = br.readLine();
                 }
-            } finally {
-                br.close();
             }
         } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
@@ -46,7 +44,7 @@ public class ParseHTMLFile {
             if (current > prev) {
                 prev = current;
             } else {
-              //  return false;
+            //    return false;
             }
         }
         return true;
