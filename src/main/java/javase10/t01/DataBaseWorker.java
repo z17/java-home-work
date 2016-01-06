@@ -21,8 +21,7 @@ class DataBaseWorker {
     }
 
     public void createTable() {
-        try {
-            Statement create = connection.createStatement();
+        try (Statement create = connection.createStatement()){
             String s = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "  ( " +
                     " `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, " +
                     " `name` VARCHAR(255) NOT NULL, " +
@@ -48,8 +47,7 @@ class DataBaseWorker {
 
     public void update(int id, String newName, double newLat, double newLon) {
         String update = "UPDATE " + TABLE_NAME + " SET name = ?, lat = ?, lon = ? WHERE id = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(update);
+        try (PreparedStatement ps = connection.prepareStatement(update)){
             ps.setString(1, newName);
             ps.setDouble(2, newLat);
             ps.setDouble(3, newLon);
@@ -66,8 +64,7 @@ class DataBaseWorker {
     public void insert(String name, double lat, double lon) {
 
         String insert = "INSERT INTO " + TABLE_NAME + " (name, lat, lon) VALUES (?, ?, ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(insert);
+        try (PreparedStatement ps = connection.prepareStatement(insert)){
             ps.setString(1, name);
             ps.setDouble(2, lat);
             ps.setDouble(3, lon);
@@ -81,12 +78,12 @@ class DataBaseWorker {
     public ArrayList<Test> select(TestColumns key, Object value) {
         String select = "SELECT id, name, lat, lon FROM " + TABLE_NAME + " WHERE "+key+" = ?";
         ArrayList<Test> result = new ArrayList<>();
-        try {
-            PreparedStatement ps = connection.prepareStatement(
-                    select,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY
-            );
+        try ( PreparedStatement ps = connection.prepareStatement(
+                select,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            )
+        ){
             if (value instanceof String) {
                 ps.setString(1, (String) value);
             } else if (value instanceof Double) {
@@ -95,13 +92,14 @@ class DataBaseWorker {
                 ps.setInt(1, (Integer) value);
             }
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                double lat = rs.getDouble("lat");
-                double lon = rs.getDouble("lon");
-                String name = rs.getString("name");
-                result.add( new Test(id, name, lat, lon));
+            try  (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    double lat = rs.getDouble("lat");
+                    double lon = rs.getDouble("lon");
+                    String name = rs.getString("name");
+                    result.add(new Test(id, name, lat, lon));
+                }
             }
 
 
