@@ -22,7 +22,7 @@ class IntegerSetterGetter extends Thread {
 
     public void run() {
         int action;
-        synchronized (this) {
+        synchronized (IntegerSetterGetter.class) {
             countThreads++;
         }
 
@@ -40,7 +40,7 @@ class IntegerSetterGetter extends Thread {
             e.printStackTrace();
         }
 
-        synchronized (this) {
+        synchronized (IntegerSetterGetter.class) {
             countThreads--;
         }
     }
@@ -53,7 +53,7 @@ class IntegerSetterGetter extends Thread {
                     + " хочет извлечь число.");
             number = resource.getELement();
             if (number == null) {
-                synchronized (this) {
+                synchronized (IntegerSetterGetter.class) {
                     // если число ождающих потоков на 1 меньше общего числа потоков - мы не должны давать последнему ожидать значения
                     if (countWaitingThreads + 1 == countThreads) {
                         return;
@@ -66,7 +66,7 @@ class IntegerSetterGetter extends Thread {
                     System.out.println("Поток " + getName() + " возобновил работу.");
                     number = resource.getELement();
                 }
-                synchronized (this) {
+                synchronized (IntegerSetterGetter.class) {
                     countWaitingThreads--;
                 }
             }
