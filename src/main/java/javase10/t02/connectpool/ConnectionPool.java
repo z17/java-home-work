@@ -14,6 +14,18 @@ public final class ConnectionPool {
     private String user;
     private String password;
     private int poolSize;
+    public static ConnectionPool INSTANCE;
+
+    public static ConnectionPool getInstance() {
+        if (INSTANCE == null) {
+            synchronized (ConnectionPool.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ConnectionPool();
+                }
+            }
+        }
+        return INSTANCE;
+    }
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
