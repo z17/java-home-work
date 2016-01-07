@@ -140,7 +140,7 @@ public class PooledConnection implements Connection {
 
     @Override
     public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
-        return null;
+        return connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class PooledConnection implements Connection {
 
     @Override
     public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
-        return createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
+        return connection.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
     @Override
@@ -261,7 +261,7 @@ public class PooledConnection implements Connection {
 
     @Override
     public Properties getClientInfo() throws SQLException {
-        return null;
+        return connection.getClientInfo();
     }
 
     @Override
@@ -271,7 +271,7 @@ public class PooledConnection implements Connection {
 
     @Override
     public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
-        return null;
+        return connection.createStruct(typeName, attributes);
     }
 
     @Override
@@ -281,7 +281,7 @@ public class PooledConnection implements Connection {
 
     @Override
     public String getSchema() throws SQLException {
-        return null;
+        return connection.getSchema();
     }
 
     @Override

@@ -16,6 +16,11 @@ public class BookDAO {
     public BookDAO() {
         ConnectionPool pool = ConnectionPool.getInstance();
         try {
+            pool.initPoolData();
+        } catch (ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+        try {
             connection = pool.takeConnection();
         } catch (ConnectionPoolException e) {
             e.printStackTrace();
@@ -25,7 +30,7 @@ public class BookDAO {
     // todo: parameter превратить в ENUM, чтобы не могли присылать левые строки
     public ArrayList<Book> get(String parameter, Object value) {
         String select = "SELECT id, name, author, count_reads FROM " + TABLE_NAME + " WHERE " + parameter + " = ?";
-        ArrayList<Book> result = new ArrayList<>();
+        ArrayList<Book> result = null;
         try ( PreparedStatement ps = connection.prepareStatement(
                 select,
                 ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -40,15 +45,40 @@ public class BookDAO {
                 System.out.println("something went wrong with type of the value");
                 throw new SQLException("wrong type of value in SELECT");
             }
+            result = getList(ps);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
-            try  (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String name = rs.getString("name");
-                    String author = rs.getString("author");
-                    int countReads = rs.getInt("count_reads");
-                    result.add(new Book(id, name, author, countReads));
-                }
+    public ArrayList<Book> get() {
+        String select = "SELECT id, name, author, count_reads FROM " + TABLE_NAME;
+        ArrayList<Book> result = null;
+        try ( PreparedStatement ps = connection.prepareStatement(
+                select,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+        )
+        ){
+            result = getList(ps);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
+    private ArrayList<Book> getList(PreparedStatement ps) {
+        ArrayList<Book> result = new ArrayList<>();
+        try  (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String author = rs.getString("author");
+                int countReads = rs.getInt("count_reads");
+                result.add(new Book(id, name, author, countReads));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +86,7 @@ public class BookDAO {
         return result;
     }
 
-    void create(Book book) {
+    public void create(Book book) {
         String insert = "INSERT INTO " + TABLE_NAME + " (name, author, count_reads) VALUES (?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(insert)){
             ps.setString(1, book.getName());
@@ -83,6 +113,12 @@ public class BookDAO {
     }
 
     void delete(Book book) {
-
+        String delete = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(delete)){
+            ps.setInt(1, book.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

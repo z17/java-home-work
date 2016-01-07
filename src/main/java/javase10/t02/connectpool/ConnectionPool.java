@@ -34,6 +34,7 @@ public final class ConnectionPool {
         this.user = dbResourceManager.getValue(DBParameter.DB_USER);
         this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
         this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
+
     }
 
     public void initPoolData() throws ConnectionPoolException {
