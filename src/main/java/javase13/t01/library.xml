@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<library
+        xmlns="http://test.ru/library"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://test.ru/library library.xsd">
+    <categories>
+        <category>
+            <id>1</id>
+            <name>История</name>
+            <description>Учебники, книги по истории</description>
+        </category>
+        <category>
+            <id>2</id>
+            <name>Романы</name>
+        </category>
+        <category>
+            <id>3</id>
+            <name>Программирование</name>
+        </category>
+    </categories>
+    <books>
+        <book category="1">
+            <id>1</id>
+            <name>Учебник по Истории России 10 класс</name>
+            <author>Сахаров</author>
+            <language>ru</language>
+            <reads>0</reads>
+        </book>
+        <book category="2">
+            <id>2</id>
+            <name>Черный обелиск</name>
+            <author>Эрих Мария Ремарк</author>
+            <language>ru</language>
+            <reads>2</reads>
+        </book>
+        <book category="3">
+            <id>3</id>
+            <name>Совершенный код</name>
+            <author>С. Макконнелл</author>
+            <language>ru</language>
+            <reads>1</reads>
+        </book>
+    </books>
+</library>

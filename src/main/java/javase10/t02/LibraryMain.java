@@ -1,8 +1,5 @@
 package javase10.t02;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -13,12 +10,10 @@ public class LibraryMain {
         Scanner scanner = new Scanner(System.in);
         String command;
         LibraryMain library = new LibraryMain();
-        boolean actualList = false;
         System.out.println("Commands: get list, get book, add, read, delete, exit");
         do {
             System.out.println("Enter command:");
             command = scanner.nextLine();
-
 
             switch (command) {
                 case "get list":
