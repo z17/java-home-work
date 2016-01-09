@@ -1,11 +1,15 @@
 package javase03.t03;
 
 
+import javafx.util.Pair;
 import org.jsoup.Jsoup;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +20,7 @@ public class ParseHTMLFile {
     public void loadFile(String file) {
         try {
 
-            try (BufferedReader br = new BufferedReader(new FileReader(file));) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
 
                 while (line != null) {
@@ -40,11 +44,10 @@ public class ParseHTMLFile {
         int prev = 0;
         while (links.find()) {
             int current = Integer.parseInt(links.group(2));
-            System.out.print(current);
             if (current > prev) {
                 prev = current;
             } else {
-            //    return false;
+                return false;
             }
         }
         return true;
@@ -62,8 +65,9 @@ public class ParseHTMLFile {
         */
     }
 
+    // возвращает все предложения, где содержатся ссылки на рисунки. Если в предложении несколько ссылок - в результате предложения дублируются
     public ArrayList<String> getAllLinkSentence() {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
         String clearText = Jsoup.parse(html.toString()).text();
 
         /*
@@ -71,16 +75,45 @@ public class ParseHTMLFile {
         предложение начинается с заглавной буквы, далее группа означающая всё что может быть, дальше ссылка на рисунок, и снова такая группа
         в конце . ? или !
          */
-        String pattern = "([А-ЯA-Z](|[^?!.\\(]|\\([^\\)]*\\))*\\((р|Р)ис\\. ([0-9]*)\\)(|[^?!.\\(]|\\([^\\)]*\\))*[.?!])";
+
+        // карта где ключ - позиции начала и конца предложения, значение - само предложение
+        HashMap<Integer, String> sentences = new HashMap<>();
+
+        //String pattern = "([А-ЯA-Z](|[^?!.\\(]|\\([^\\)]*\\))*\\((р|Р)ис\\. ([0-9]*)\\)(|[^?!.\\(]|\\([^\\)]*\\))*[.?!])";
+        //pattern = "([А-ЯA-Z]([^?!.\\(]|\\([^\\)]*\\))*?\\((р|Р)ис\\. ([0-9]*)\\)([^?!.\\(]|\\([^\\)]*\\))*?[.?!])";
+        String pattern = "([А-ЯA-Z]([^?!.\\(]|\\([^\\)]*\\))*?[.?!])";
         Pattern patternFind = Pattern.compile(pattern);
         Matcher sentence = patternFind.matcher(clearText);
         while (sentence.find()) {
-            System.out.print(sentence.group(4));
+            sentences.put(sentence.start(), sentence.group(0));
         }
+
+        String patternLinks = "\\((р|Р)ис\\. ([0-9]*)\\)";
+        Pattern patternFindLinks = Pattern.compile(patternLinks);
+        Matcher links = patternFindLinks.matcher(clearText);
+        int prev = 0;
+        while (links.find()) {
+            int position = links.start();
+            String findSentence  = findSentece(position, sentences);
+            if (findSentence != null) {
+                result.add(findSentence);
+            }
+        }
+
         return result;
     }
 
     public StringBuilder getHtml() {
         return html;
+    }
+
+    private String findSentece(int position, HashMap<Integer, String> sentences) {
+        for(Entry<Integer, String> current: sentences.entrySet()) {
+            if (position >= current.getKey() && position <= current.getKey() + current.getValue().length()) {
+                return current.getValue();
+            }
+
+        }
+        return null;
     }
 }

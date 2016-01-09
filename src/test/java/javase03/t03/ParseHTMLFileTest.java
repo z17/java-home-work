@@ -22,9 +22,6 @@ public class ParseHTMLFileTest {
     @Test
     public void testGetAllLinkSentence() throws Exception {
         file.loadFile("F:\\java\\java-home-work\\src\\main\\resources\\javase03\\t03\\input.html");
-        file.detectSequence();
-        System.out.println();
-        file.getAllLinkSentence();
-
+        assertTrue(file.getAllLinkSentence().size() == 120);
     }
 }
